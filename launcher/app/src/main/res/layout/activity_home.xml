@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <!-- Optional wallpaper (files/wallpaper.jpg). Pitch black when absent. -->
+    <ImageView
+        android:id="@+id/wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/wallpaper_scrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/wallpaper_scrim"
+        android:visibility="gone" />
+
+    <!-- Viewport; we scroll by springing content.translationY. -->
+    <be.kiwazo.tvhome.PageLayout
+        android:id="@+id/page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <be.kiwazo.tvhome.ContentLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <!-- Ambient glow behind the hero title, tinted from the focused banner. -->
+            <be.kiwazo.tvhome.GlowView
+                android:id="@+id/glow"
+                android:layout_width="match_parent"
+                android:layout_height="480dp" />
+
+            <LinearLayout
+                android:id="@+id/column"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/header"
+                    android:layout_width="match_parent"
+                    android:layout_height="394dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|start"
+                        android:layout_marginStart="@dimen/edge_text"
+                        android:layout_marginTop="36dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/greeting"
+                            style="@style/Greeting" />
+
+                        <TextView
+                            android:id="@+id/clock"
+                            style="@style/Clock" />
+
+                        <TextView
+                            android:id="@+id/date"
+                            style="@style/DateLine" />
+
+                        <!-- Next calendar events (files/calendar.txt). -->
+                        <LinearLayout
+                            android:id="@+id/agenda"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="22dp"
+                            android:orientation="vertical"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/pills"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="42dp"
+                        android:layout_marginEnd="@dimen/edge"
+                        android:clipChildren="false"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/pill_inputs"
+                            style="@style/Pill">
+
+                            <ImageView
+                                style="@style/PillIcon"
+                                android:src="@drawable/ic_input" />
+
+                            <TextView
+                                style="@style/PillText"
+                                android:text="@string/inputs" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/pill_wifi"
+                            style="@style/Pill"
+                            android:layout_marginStart="10dp">
+
+                            <ImageView
+                                android:id="@+id/wifi_icon"
+                                style="@style/PillIcon"
+                                android:src="@drawable/ic_wifi" />
+
+                            <TextView
+                                android:id="@+id/wifi_label"
+                                style="@style/PillText"
+                                android:maxWidth="170dp"
+                                android:text="@string/wifi_generic" />
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:id="@+id/pill_settings"
+                            style="@style/PillRound"
+                            android:layout_marginStart="10dp"
+                            android:contentDescription="@string/settings">
+
+                            <ImageView
+                                style="@style/PillIcon"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_settings" />
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/hero_title"
+                        style="@style/HeroTitle"
+                        android:layout_gravity="bottom|start"
+                        android:layout_marginStart="@dimen/edge_text"
+                        android:layout_marginBottom="16dp" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/dock_band"
+                    android:layout_width="match_parent"
+                    android:layout_height="126dp"
+                    android:layout_marginStart="@dimen/band_margin"
+                    android:layout_marginEnd="@dimen/band_margin"
+                    android:background="@drawable/dock_band"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:paddingStart="@dimen/band_padding"
+                    android:paddingTop="16dp"
+                    android:paddingEnd="@dimen/band_padding">
+
+                    <LinearLayout
+                        android:id="@+id/dock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clipChildren="false"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal" />
+                </FrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/grid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:descendantFocusability="blocksDescendants"
+                    android:focusable="false"
+                    android:overScrollMode="never"
+                    android:paddingStart="@dimen/grid_padding"
+                    android:paddingEnd="@dimen/grid_padding"
+                    android:paddingBottom="80dp" />
+            </LinearLayout>
+
+            <!-- Inputs dropdown, positioned under the Inputs pill at runtime. -->
+            <LinearLayout
+                android:id="@+id/inputs_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|start"
+                android:background="@drawable/menu_panel"
+                android:minWidth="220dp"
+                android:orientation="vertical"
+                android:padding="6dp"
+                android:visibility="gone" />
+
+            <!-- The one focus highlight. Sized to the whole content by ContentLayout. -->
+            <be.kiwazo.tvhome.GlassView
+                android:id="@+id/glass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </be.kiwazo.tvhome.ContentLayout>
+    </be.kiwazo.tvhome.PageLayout>
+</FrameLayout>

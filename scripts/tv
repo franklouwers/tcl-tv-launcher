@@ -1,0 +1,4 @@
+#!/bin/bash
+# Wrapper: run the Python ADB client from the project venv. See tvadb.py for usage.
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+exec "$ROOT/.venv/bin/python" "$ROOT/scripts/tvadb.py" "$@"

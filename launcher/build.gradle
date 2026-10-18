@@ -1,0 +1,8 @@
+plugins {
+    id 'com.android.application' version '8.7.3' apply false
+}
+
+// Keep build output out of Dropbox.
+allprojects {
+    layout.buildDirectory = file("${System.getProperty('user.home')}/.cache/tvhome-build/${project.name}")
+}

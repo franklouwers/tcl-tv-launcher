@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TV Home</string>
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_evening">Good evening</string>
+    <string name="greeting_night">Still up?</string>
+    <string name="inputs">Inputs</string>
+    <string name="settings">Settings</string>
+    <string name="wifi_generic">Wi-Fi</string>
+    <string name="wifi_ethernet">Ethernet</string>
+    <string name="wifi_offline">Offline</string>
+    <string name="hdmi_n">HDMI %1$d</string>
+    <string name="av">AV</string>
+    <string name="live_tv">Live TV</string>
+    <string name="not_connected">Not connected</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="now">Now</string>
+    <string name="inputs_empty">We couldn\'t find any inputs on this TV.</string>
+    <string name="launch_failed">Hmm, we couldn\'t open %1$s. Give it another go in a moment.</string>
+    <string name="input_failed">Hmm, we couldn\'t switch to %1$s. Try the Inputs button on the remote.</string>
+    <string name="key_service_description">Lets the remote\'s settings and app buttons work without the Google TV home screen. Only those keys are read.</string>
+</resources>

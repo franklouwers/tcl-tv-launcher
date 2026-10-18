@@ -1,0 +1,21 @@
+.DS_Store
+.venv/
+__pycache__/
+
+# Android / Gradle
+local.properties
+.gradle/
+build/
+*.apk
+.idea/
+*.iml
+
+# Device snapshot: contains serial, android_id, Bluetooth MAC
+backup/*
+!backup/disabled-by-us.txt
+!backup/packages-disabled-before.txt
+
+# Screenshots show personal data (calendar, SSID, account)
+shots/*
+!shots/00-before-home.png
+!shots/50-grid-final.png

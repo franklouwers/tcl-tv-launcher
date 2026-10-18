@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Everything lines up on one vertical edge: clock, hero, dock tiles, grid, pills. -->
+    <dimen name="edge">58dp</dimen>
+    <dimen name="edge_text">56dp</dimen>
+    <dimen name="band_margin">40dp</dimen>
+    <dimen name="band_padding">18dp</dimen>
+    <dimen name="grid_padding">46dp</dimen>
+    <dimen name="dock_gap">16dp</dimen>
+    <dimen name="grid_gap">24dp</dimen>
+    <dimen name="card_radius">12dp</dimen>
+</resources>

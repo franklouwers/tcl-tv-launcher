@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="greeting_morning">Goedemorgen</string>
+    <string name="greeting_afternoon">Goedemiddag</string>
+    <string name="greeting_evening">Goedenavond</string>
+    <string name="greeting_night">Nog wakker?</string>
+    <string name="inputs">Ingangen</string>
+    <string name="settings">Instellingen</string>
+    <string name="wifi_generic">Wifi</string>
+    <string name="wifi_ethernet">Ethernet</string>
+    <string name="wifi_offline">Offline</string>
+    <string name="live_tv">Live tv</string>
+    <string name="not_connected">Niet verbonden</string>
+    <string name="today">Vandaag</string>
+    <string name="tomorrow">Morgen</string>
+    <string name="now">Nu</string>
+    <string name="inputs_empty">We vonden geen ingangen op deze tv.</string>
+    <string name="launch_failed">Hmm, we kregen %1$s niet open. Probeer het zo nog eens.</string>
+    <string name="input_failed">Hmm, overschakelen naar %1$s lukte niet. Probeer de ingangsknop op de afstandsbediening.</string>
+    <string name="key_service_description">Laat de instellingen- en app-knoppen van de afstandsbediening werken zonder het Google TV-startscherm. Alleen die knoppen worden gelezen.</string>
+</resources>

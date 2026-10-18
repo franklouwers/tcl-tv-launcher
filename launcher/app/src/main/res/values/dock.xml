@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default dock, left to right (max 6). Override without rebuilding by
+         pushing a dock.txt; see README / scripts/set-dock.sh. -->
+    <string-array name="dock_packages">
+        <item>be.base.tv</item>
+        <item>com.netflix.ninja</item>
+        <item>com.amazon.amazonvideo.livingroom</item>
+        <item>com.disney.disneyplus</item>
+        <item>be.rtbf.auvio</item>
+        <item>be.vrt.vrtnu</item>
+    </string-array>
+
+    <!-- Apps never shown in the grid. Override with hidden.txt. -->
+    <string-array name="hidden_packages">
+        <item>be.kiwazo.tvhome</item>
+    </string-array>
+</resources>
