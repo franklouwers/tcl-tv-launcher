@@ -93,7 +93,7 @@ Source: [`launcher/`](launcher/), Java with AndroidX RecyclerView, minSdk 34, de
 - **App buttons on the remote:**
   - Netflix opens Netflix.
   - Prime opens Prime Video.
-  - YouTube opens YouTube.
+  - YouTube opens SmartTube.
   - TCL Channel, TCL Home and Web all open BASE TV.
 
 **Look:** pitch black, the dock in a lighter rounded band, one glass highlight that springs between tiles, the focused app's name above the dock with a glow sampled from its banner, and Outfit type ([OFL](launcher/OUTFIT-OFL.txt)). There's no blur, no video and no polling. It uses about 44 MB of RAM, and free RAM went from 519 MB to 790 MB.
@@ -166,7 +166,7 @@ On Google TV these buttons went to the stock launcher (YouTube) or to TCL apps t
 |---|---|---|
 | Netflix | 4062 (TCL) | Netflix, through its own remote-button entry (`NETFLIX_KEY_START`) |
 | Prime | 4099 (TCL) | Prime Video, through `AMAZON_BUTTON` |
-| YouTube | `KEYCODE_BUTTON_3` | YouTube; the same code from a game controller is ignored |
+| YouTube | `KEYCODE_BUTTON_3` | YouTube, **currently set to SmartTube** (see below); the same code from a game controller is ignored |
 | TCL Channel | 4020 (TCL) | BASE TV |
 | TCL Home | 4137 (TCL) | BASE TV |
 | Web | 4159 (TCL) | BASE TV |
@@ -177,6 +177,29 @@ Change one without rebuilding:
 scripts/set-buttons.sh "WEB = com.spotify.tv.android" "TCL_HOME = be.vrt.vrtnu"
 scripts/set-buttons.sh "TCL_CHANNEL = none"   # leave that button to the TV itself
 scripts/set-buttons.sh --default
+```
+
+### SmartTube instead of YouTube
+
+[SmartTube](https://github.com/yuliskov/SmartTube) is an ad-free YouTube client for Android TV, installed from its official GitHub release. Your TV needs the 32-bit `armeabi-v7a` build.
+
+- **Installed version:** 32.56, `SmartTube_stable_32.56_armeabi-v7a.apk`, package `org.smarttube.stable`. The SHA-256 matched GitHub's published digest, and the APK is signed by "Yurii L, SmartTube".
+- **YouTube button:** opens SmartTube, set with `scripts/set-buttons.sh "YOUTUBE = org.smarttube.stable"`.
+- **YouTube app:** still installed, so casting YouTube from a phone keeps working. It's only hidden from the grid.
+
+To undo:
+
+```bash
+scripts/set-buttons.sh --default
+scripts/hide-apps.sh com.tcl.suspension com.tcl.dashboard
+```
+
+The first command points the button back at YouTube; the second shows YouTube in the grid again.
+
+**Updating:** SmartTube has its own updater. It may ask to allow installing apps; allow it for SmartTube only. Or download the newer `…_armeabi-v7a.apk` from the GitHub releases page and run:
+
+```bash
+scripts/tv install SmartTube_stable_X.YY_armeabi-v7a.apk
 ```
 
 ### Building
