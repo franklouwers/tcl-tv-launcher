@@ -146,13 +146,14 @@ On Google TV that key (`KEYCODE_NOTIFICATION` on this remote) opens the stock la
 - **First press:** opens Instellingen with exactly the same intent as the ⚙ pill.
 - **Second press:** brings back the app that was in front, or the home screen.
 
-The service only checks which app owns the focused window at the moment of a press; nothing runs in between. TCL's Quick panel (picture/sound presets) is hidden from the grid. If you want it back there, run `scripts/hide-apps.sh com.tcl.suspension`. Picture and sound are also under **Instellingen → Weergave en geluid**.
+To know where to return, the service reads Android's usage-statistics log (which app was resumed last) at the moment of a press; nothing runs in between. It deliberately does **not** read other apps' windows. An earlier version did, and that made web-based apps like BASE TV build an accessibility tree on every screen update, which cost them D-pad presses. TCL's Quick panel (picture/sound presets) is hidden from the grid. If you want it back there, run `scripts/hide-apps.sh com.tcl.suspension`. Picture and sound are also under **Instellingen → Weergave en geluid**.
 
 `build-and-install.sh` sets it up:
 
 - It enables the service.
 - It allows TCL's `AUTO_START` app-op, because TCL's "TclAppBoot" manager otherwise blocks it.
 - It grants `WRITE_SECURE_SETTINGS`.
+- It allows the `GET_USAGE_STATS` app-op (usage access).
 
 TCL resets that app-op at every boot and blocks the first bind. Android normally retries once the launcher starts as home, and the `WRITE_SECURE_SETTINGS` grant lets the launcher re-trigger the bind itself if Android doesn't. Two test reboots confirmed it comes back.
 
@@ -224,3 +225,5 @@ scripts/build-and-install.sh --no-build       # reinstall the last build
 - **A TV software update re-enabled bloat:** run `scripts/disable.sh $(cat backup/disabled-by-us.txt)`. It's safe to repeat and keeps the setup-wizard order.
 - **Home shows Google TV again:** run `scripts/build-and-install.sh --no-build --disable-stock`.
 - **Screenshots of HDMI or Live TV come out empty:** expected; TCL marks those screens as secure.
+- **D-pad loses presses in an app:** turn the key service off as a test via **Instellingen → Toegankelijkheid → TV Home**. Restart the app afterwards, because apps that were running when you flipped the switch can get stuck until they restart.
+- **The Mac can't reach the TV:** the scripts need the Mac on the same wired/Wi-Fi segment as the TV. Over this Mac's Wi-Fi alone only the router is reachable.

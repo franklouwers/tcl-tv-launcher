@@ -11,6 +11,11 @@
          Granted over ADB by build-and-install.sh. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Lets the ⚙ key tell which app is in front without reading other apps'
+         windows. Granted over ADB (app-op) by build-and-install.sh. -->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="ProtectedPermissions" />
     <!-- Lets the launcher re-bind its ⚙-key service after boot (TCL blocks the
          first attempt). Granted over ADB by build-and-install.sh. -->
     <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"

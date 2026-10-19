@@ -1,6 +1,8 @@
 package be.kiwazo.tvhome;
 
 import android.accessibilityservice.AccessibilityService;
+import android.app.usage.UsageEvents;
+import android.app.usage.UsageStatsManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,19 +10,15 @@ import android.content.pm.ResolveInfo;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Gives the remote's special keys a job again. On Google TV they are routed to
@@ -60,15 +58,9 @@ public class KeyService extends AccessibilityService {
         DEFAULT_TARGETS.put("WEB", BASE_TV);
     }
 
-    /** Windows that pop up over an app without replacing it. */
-    private static final Set<String> OVERLAYS = new HashSet<>(Arrays.asList(
-            "android", "com.android.systemui", "com.tcl.inputmethod.international",
-            "com.google.android.inputmethod.latin", "com.tcl.systemui.plugin"));
-
     /**
-     * Fallback for when the active window can't be read: the last app seen in
-     * front. Window events miss some apps (and our own home screen), so
-     * HomeActivity also reports itself.
+     * Fallback when usage access is missing: HomeActivity reports itself when it
+     * comes to the front.
      */
     private static volatile String foregroundPkg;
     private String returnPkg;
@@ -103,10 +95,26 @@ public class KeyService extends AccessibilityService {
 
     // ---------------------------------------------------------------- ⚙ key
 
-    /** Who owns the focused window right now; asked once per key press. */
+    /**
+     * The app in front right now, from the usage-stats log (last activity resumed).
+     * Deliberately not via window content: a service that can read other apps'
+     * windows makes web-based apps such as BASE TV build an accessibility tree on
+     * every update, and on this TV that cost them D-pad presses.
+     * Needs usage access (GET_USAGE_STATS app-op), granted by build-and-install.sh.
+     */
     private String currentPackage() {
-        AccessibilityNodeInfo root = getRootInActiveWindow();
-        if (root != null && root.getPackageName() != null) return root.getPackageName().toString();
+        UsageStatsManager usm = getSystemService(UsageStatsManager.class);
+        if (usm != null) {
+            long now = System.currentTimeMillis();
+            UsageEvents events = usm.queryEvents(now - 24L * 60 * 60 * 1000, now);
+            UsageEvents.Event e = new UsageEvents.Event();
+            String last = null;
+            while (events != null && events.hasNextEvent()) {
+                events.getNextEvent(e);
+                if (e.getEventType() == UsageEvents.Event.ACTIVITY_RESUMED) last = e.getPackageName();
+            }
+            if (last != null) return last;
+        }
         return foregroundPkg;
     }
 
@@ -193,10 +201,7 @@ public class KeyService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        // Only window changes are subscribed: remember which app is in front.
-        if (event.getEventType() != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED || event.getPackageName() == null) return;
-        String pkg = event.getPackageName().toString();
-        if (!OVERLAYS.contains(pkg)) foregroundPkg = pkg;
+        // No UI events subscribed: this service only filters keys.
     }
 
     @Override

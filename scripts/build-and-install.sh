@@ -54,6 +54,8 @@ SVC="$PKG/$PKG.KeyService"
 "$TV" shell "appops set $PKG AUTO_START allow"
 # TCL resets AUTO_START at boot; this lets the launcher re-bind the service itself.
 "$TV" shell "pm grant $PKG android.permission.WRITE_SECURE_SETTINGS"
+# Usage access, so the ⚙ key knows which app is in front.
+"$TV" shell "appops set $PKG GET_USAGE_STATS allow"
 cur="$("$TV" shell "settings get secure enabled_accessibility_services" | tr -d '\r\n' | tr ':' '\n' | { grep -v -e "^$SVC$" -e '^null$' || true; } | paste -sd: -)"
 # Rewriting the list (without, then with us) makes Android bind the freshly installed service.
 "$TV" shell "settings put secure enabled_accessibility_services '$cur'"
